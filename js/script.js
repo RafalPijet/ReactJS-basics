@@ -1,23 +1,115 @@
-
-var GalleryItem = React.createClass({
-    propTypes: {
-        image: React.PropTypes.object.isRequired,
+var movies = [
+    {
+        id: 1,
+        title: "Harry Potter",
+        desc: "film o czarodzieju",
+        poster: "../images/harry_poter.jpg"
     },
+    {
+        id: 2,
+        title: "Król Lew",
+        desc: "film o królu sawanny",
+        poster: "../images/lion_king.jpg"
+    },
+    {
+        id: 3,
+        title: "Obcy",
+        desc: "film o zwierzaczku domowym",
+        poster: "../images/alien.jpg"
+    },
+    {
+        id: 4,
+        title: "Obcy vs Predator",
+        desc: "film o skłóconych kumplach z innej galaktyki",
+        poster: "../images/alienvspredator.jpg"
+    },
+    {
+        id: 5,
+        title: "Predator",
+        desc: "film o austriaku, który załatwił kosmitę",
+        poster: "../images/predator.jpg"
+    },
+    {
+        id: 6,
+        title: "Gatunek",
+        desc: "film o tym, że nie z każdą kobietą warto uprawiać sex",
+        poster: "../images/gatunek.jpg"
+    }
+];
 
+var MovieTitle = React.createClass({
+    propTypes: {
+        movieItem: React.PropTypes.object.isRequired
+    },
     render: function () {
-       return (
-           React.createElement("div", {},
-                React.createElement("h2", {}, this.props.image.name),
-                React.createElement("img", {src: this.props.image.src})
-           )
-       )
-   }
+        return React.createElement("h2", {}, this.props.movieItem.title)
+    }
 });
 
-var image = {
-    name: "Kotek",
-    src: "http://imgur.com/n8OYCzR.png"
-};
+var MovieDescription = React.createClass({
+    propTypes: {
+        movieItem: React.PropTypes.object.isRequired
+    },
+    render: function () {
+        return React.createElement("p", {}, this.props.movieItem.desc)
+    }
+});
 
-var element = React.createElement(GalleryItem, {image: image});
+var MoviePoster = React.createClass({
+    propTypes: {
+        movieItem: React.PropTypes.object.isRequired
+    },
+    render: function () {
+        return React.createElement("img", {src: this.props.movieItem.poster,
+                                           style: {width: "236px",
+                                           height: "345px"}})
+    }
+});
+
+var Movie = React.createClass({
+    propTypes: {
+        movieItem: React.PropTypes.object.isRequired
+    },
+    render: function () {
+        return (
+            React.createElement("div", {},
+                React.createElement(MovieTitle, {movieItem: this.props.movieItem}),
+                React.createElement(MovieDescription, {movieItem: this.props.movieItem}),
+                React.createElement(MoviePoster, {movieItem: this.props.movieItem})
+            )
+        )
+    }
+});
+
+var MoviesList = React.createClass({
+    propTypes: {
+        moviesList: React.PropTypes.array.isRequired
+    },
+    render: function () {
+        console.log("wow");
+        // var moviesItems = this.props.moviesList.map(function (movie) {
+        //
+        //     return  React.createElement("li", {key: movie.id},
+        //                 React.createElement(Movie, {movieItem: movie}))
+        // });
+        // console.log(moviesItems);
+        // return moviesItems
+    }
+});
+
+var moviesList = movies.map(function (movie) {
+    return React.createElement("li", {key: movie.id,
+                                      style: {display: "inline-block",
+                                      padding: "0 10px 20px"}},
+              React.createElement(Movie, {movieItem: movie})
+    );
+});
+
+// var moviesList = React.createElement(MoviesList, {moviesList: movies});
+
+
+var element = React.createElement("div", {},
+    React.createElement("h1", {}, "Lista filmów"),
+    React.createElement("ul", {}, moviesList));
+
 ReactDOM.render(element, document.getElementById("app"));
