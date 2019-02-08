@@ -72,7 +72,8 @@ var Movie = React.createClass({
     },
     render: function () {
         return (
-            React.createElement("div", {},
+            React.createElement("li", {style: {display: "inline-block",
+                                                padding: "0 10px 20px"}},
                 React.createElement(MovieTitle, {movieItem: this.props.movieItem}),
                 React.createElement(MovieDescription, {movieItem: this.props.movieItem}),
                 React.createElement(MoviePoster, {movieItem: this.props.movieItem})
@@ -86,30 +87,17 @@ var MoviesList = React.createClass({
         moviesList: React.PropTypes.array.isRequired
     },
     render: function () {
-        console.log("wow");
-        // var moviesItems = this.props.moviesList.map(function (movie) {
-        //
-        //     return  React.createElement("li", {key: movie.id},
-        //                 React.createElement(Movie, {movieItem: movie}))
-        // });
-        // console.log(moviesItems);
-        // return moviesItems
+        var list = this.props.moviesList.map(function (movie) {
+             return React.createElement(Movie, {key: movie.id, movieItem: movie})
+        });
+        return (
+            React.createElement("ul", {}, list)
+        )
     }
 });
 
-var moviesList = movies.map(function (movie) {
-    return React.createElement("li", {key: movie.id,
-                                      style: {display: "inline-block",
-                                      padding: "0 10px 20px"}},
-              React.createElement(Movie, {movieItem: movie})
-    );
-});
-
-// var moviesList = React.createElement(MoviesList, {moviesList: movies});
-
-
 var element = React.createElement("div", {},
     React.createElement("h1", {}, "Lista filmów"),
-    React.createElement("ul", {}, moviesList));
+    React.createElement(MoviesList, {moviesList: movies}));
 
 ReactDOM.render(element, document.getElementById("app"));
