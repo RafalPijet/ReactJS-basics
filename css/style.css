@@ -2,6 +2,24 @@
   box-sizing: border-box;
 }
 
+.main {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-align: center;
+      align-items: center;
+  border: 1px solid #000;
+  margin: 20px 0;
+}
+
+.main button {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
 /* Components */
 /* Sections */
 /* Pages / Views */

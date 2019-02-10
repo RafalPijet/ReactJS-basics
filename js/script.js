@@ -1,103 +1,67 @@
-var movies = [
-    {
-        id: 1,
-        title: "Harry Potter",
-        desc: "film o czarodzieju",
-        poster: "../images/harry_poter.jpg"
-    },
-    {
-        id: 2,
-        title: "Król Lew",
-        desc: "film o królu sawanny",
-        poster: "../images/lion_king.jpg"
-    },
-    {
-        id: 3,
-        title: "Obcy",
-        desc: "film o zwierzaczku domowym",
-        poster: "../images/alien.jpg"
-    },
-    {
-        id: 4,
-        title: "Obcy vs Predator",
-        desc: "film o skłóconych kumplach z innej galaktyki",
-        poster: "../images/alienvspredator.jpg"
-    },
-    {
-        id: 5,
-        title: "Predator",
-        desc: "film o austriaku, który załatwił kosmitę",
-        poster: "../images/predator.jpg"
-    },
-    {
-        id: 6,
-        title: "Gatunek",
-        desc: "film o tym, że nie z każdą kobietą warto uprawiać sex",
-        poster: "../images/gatunek.jpg"
-    }
-];
-
-var MovieTitle = React.createClass({
+var Counter = React.createClass({
     propTypes: {
-        title: React.PropTypes.string.isRequired
+        descLeftButton: React.PropTypes.string.isRequired,
+        descRightButton: React.PropTypes.string.isRequired,
+        quantity: React.PropTypes.number.isRequired
     },
+
+    getInitialState: function () {
+        return {
+            counter: 0
+        };
+    },
+
+    getDefaultProps: function () {
+        return {
+            descLeftButton: "decrease",
+            descRightButton: "increase",
+            quantity: 0
+        }
+    },
+
+    componentWillMount: function () {
+      console.log("Before mounting component the value of counter = "
+          + this.state.counter);
+        this.setState({
+            counter: 10
+        })
+    },
+
+    componentDidMount: function ()  {
+        console.log("After mounting component the value of counter = "
+            + this.state.counter);
+        this.setState({
+            counter: this.props.quantity
+        })
+    },
+
+    increment: function () {
+        this.setState({
+            counter: this.state.counter + 1
+        })
+    },
+
+    decrement: function () {
+        this.setState({
+            counter: this.state.counter - 1
+        })
+    },
+
     render: function () {
-        return React.createElement("h2", {}, this.props.title)
+        return React.createElement("div", {className: "main"},
+            React.createElement("button", {onClick: this.decrement}, this.props.descLeftButton),
+            React.createElement("h1", {}, "Licznik: " + this.state.counter),
+            React.createElement("button", {onClick: this.increment}, this.props.descRightButton)
+        );
     }
 });
 
-var MovieDescription = React.createClass({
-    propTypes: {
-        description: React.PropTypes.string.isRequired
-    },
-    render: function () {
-        return React.createElement("p", {}, this.props.description)
-    }
-});
 
-var MoviePoster = React.createClass({
-    propTypes: {
-        poster: React.PropTypes.string.isRequired
-    },
-    render: function () {
-        return React.createElement("img", {src: this.props.poster,
-                                           style: {width: "236px",
-                                           height: "345px"}})
-    }
-});
-
-var Movie = React.createClass({
-    propTypes: {
-        movieItem: React.PropTypes.object.isRequired
-    },
-    render: function () {
-        return (
-            React.createElement("li", {style: {display: "inline-block",
-                                                padding: "0 10px 20px"}},
-                React.createElement(MovieTitle, {title: this.props.movieItem.title}),
-                React.createElement(MovieDescription, {description: this.props.movieItem.desc}),
-                React.createElement(MoviePoster, {poster: this.props.movieItem.poster})
-            )
-        )
-    }
-});
-
-var MoviesList = React.createClass({
-    propTypes: {
-        moviesList: React.PropTypes.array.isRequired
-    },
-    render: function () {
-        var list = this.props.moviesList.map(function (movie) {
-             return React.createElement(Movie, {key: movie.id, movieItem: movie})
-        });
-        return (
-            React.createElement("ul", {}, list)
-        )
-    }
-});
-
-var element = React.createElement("div", {},
-    React.createElement("h1", {}, "Lista filmów"),
-    React.createElement(MoviesList, {moviesList: movies}));
+var element = React.createElement("ul", {},
+        React.createElement(Counter, {}),
+        React.createElement(Counter, {descLeftButton: "<<", descRightButton: ">>", quantity: 50}),
+        React.createElement(Counter, {descLeftButton: "down", descRightButton: "up", quantity: 100})
+    );
 
 ReactDOM.render(element, document.getElementById("app"));
+
