@@ -34,7 +34,23 @@ var Counter = React.createClass({
             counter: this.props.quantity
         })
     },
+/*
+    componentWillReceiveProps: function () { TODO: ask
 
+    },
+
+    shouldComponentUpdate: function () {
+
+    },
+
+    componentWillUpdate: function () {
+
+    },
+
+    componentDidUpdate: function () {
+
+    },
+*/
     increment: function () {
         this.setState({
             counter: this.state.counter + 1
